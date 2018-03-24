@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -z $IMAGE_REPO ]; then
+  IMAGE_REPO=idstudios
+fi 
+IMAGE_NAME=drupal
+
+echo "** Building Drupal Plain **"
+IMAGE_TAG=plain
+docker build --no-cache --file Dockerfile-plain -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .
+docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG
+
+echo "** Building Drupal Themed **"
+IMAGE_TAG=themed
+docker build --no-cache --file Dockerfile-themed -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .
+docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG

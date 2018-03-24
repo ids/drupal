@@ -1,0 +1,25 @@
+# from https://www.drupal.org/requirements/php#drupalversions
+FROM drupal:7
+STOPSIGNAL SIGWINCH
+
+COPY apache2.conf /etc/apache2/apache2.conf
+RUN chmod 644 /etc/apache2/apache2.conf
+
+COPY themes/corporateclean /var/www/html/sites/all/themes/corporateclean
+COPY themes/corporateclean/color/alt-colors.css /var/www/html/sites/all/themes/corporateclean/color/colors.css
+
+COPY settings-env.php /var/www/html/sites/default/settings.php
+RUN chmod -w /var/www/html/sites/default/settings.php
+
+RUN usermod -u 1000 www-data
+RUN groupmod -g 1000 www-data
+#COPY envvars /etc/apache2/envvars
+#RUN chmod 644 /etc/apache2/envvars
+
+RUN mkdir /var/www/html/sites/default/files
+
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+ENTRYPOINT ["/usr/local/bin/start.sh"]
+
