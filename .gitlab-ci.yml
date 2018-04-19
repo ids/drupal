@@ -55,22 +55,22 @@ build_dockerhub_master_image:
   only:
     - master
 
-deploy_drupal_to_dev:
-  stage: deploy
-  image: lwolf/helm-kubectl-docker:v152_213
-  before_script:
-    - mkdir -p /etc/deploy
-    - echo ${dev_kube_config} | base64 -d > ${KUBECONFIG}
-    - kubectl get pods
-  script:
-    - cd $CI_PROJECT_DIR
-    - export DRUPAL_STACK_NAME=dev
-    - export DRUPAL_NAMESPACE=web
-    - export DRUPAL_IMAGE=${DOCKERHUB_IMAGE}:develop
-    - export DRUPALDB_HOST=${dev_db_host}
-    - export DRUPALDB_DB=${dev_db}
-    - export DRUPALDB_USER=${dev_db_user}
-    - export DRUPALDB_PWD=${dev_db_pwd}
-    - bash $CI_PROJECT_DIR/ci-deploy.sh ${CI_BUILD_REF_NAME}_${CI_BUILD_REF}
-  only:
-  - develop
+#deploy_drupal_to_dev:
+#  stage: deploy
+#  image: lwolf/helm-kubectl-docker:v152_213
+#  before_script:
+#    - mkdir -p /etc/deploy
+#    - echo ${dev_kube_config} | base64 -d > ${KUBECONFIG}
+#    - kubectl get pods
+#  script:
+#    - cd $CI_PROJECT_DIR
+#    - export DRUPAL_STACK_NAME=dev
+#    - export DRUPAL_NAMESPACE=web
+#    - export DRUPAL_IMAGE=${DOCKERHUB_IMAGE}:develop
+#    - export DRUPALDB_HOST=${dev_db_host}
+#    - export DRUPALDB_DB=${dev_db}
+#    - export DRUPALDB_USER=${dev_db_user}
+#    - export DRUPALDB_PWD=${dev_db_pwd}
+#    - bash $CI_PROJECT_DIR/ci-deploy.sh ${CI_BUILD_REF_NAME}_${CI_BUILD_REF}
+#  only:
+#  - develop
