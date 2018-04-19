@@ -54,9 +54,9 @@ deploy_to_dev:
     - export DRUPAL_NAMESPACE=web
     - export DRUPAL_IMAGE=${DOCKERHUB_IMAGE}:develop
     - export DRUPALDB_HOST=${dev_db_host}
-    - export DRUPALDB_DB=${dev_db}
+    - export DRUPALDB_DATABASE=${dev_db}
     - export DRUPALDB_USER=${dev_db_user}
-    - export DRUPALDB_PWD=${dev_db_pwd}
+    - export DRUPALDB_PASSWORD=${dev_db_pwd}
     - /bin/sh $CI_PROJECT_DIR/ci-deploy.sh ${CI_BUILD_REF_NAME}_${CI_BUILD_REF}
   only:
   - develop
