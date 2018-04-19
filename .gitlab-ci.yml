@@ -33,8 +33,6 @@ build_dockerhub_develop_image:
   tags:
     - docker
   script:
-    - "[ -z $DOCKERHUB_USERNAME ] && echo "DockerHub integration is not configured! DOCKERHUB_USERNAME not set" && exit 1"
-    - "[ -z $DOCKERHUB_PASSWORD ] && echo "DockerHub integration is not configured! DOCKERHUB_PASSWORD not set" && exit 1"
     - export IMAGE_VERSION=develop
     - cd $CI_PROJECT_DIR
     - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
@@ -49,8 +47,6 @@ build_dockerhub_master_image:
   tags:
     - docker
   script:
-    - "[ -z $DOCKERHUB_USERNAME ] && echo "DockerHub integration is not configured! DOCKERHUB_USERNAME not set" && exit 1"
-    - "[ -z $DOCKERHUB_PASSWORD ] && echo "DockerHub integration is not configured! DOCKERHUB_PASSWORD not set" && exit 1"
     - export IMAGE_VERSION=latest
     - cd $CI_PROJECT_DIR
     - docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
