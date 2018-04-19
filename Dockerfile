@@ -8,7 +8,7 @@ COPY apache2.conf /etc/apache2/apache2.conf
 RUN chmod 644 /etc/apache2/apache2.conf
 
 COPY settings-env.php /var/www/html/sites/default/settings.php
-RUN chmod -w /var/www/html/sites/default/settings.php
+RUN chmod -w /var/www/html/sites/default/settings.php; exit 0
 
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
