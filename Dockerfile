@@ -13,9 +13,6 @@ RUN chmod -w /var/www/html/sites/default/settings.php
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 
-#COPY envvars /etc/apache2/envvars
-#RUN chmod 644 /etc/apache2/envvars
-
 RUN mkdir /var/www/html/sites/default/files
 
 COPY start.sh /usr/local/bin/start.sh

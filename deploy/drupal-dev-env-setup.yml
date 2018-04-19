@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dev-drupal-files-volume
+  labels:
+    volume: dev-drupal-files-volume
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: "192.168.1.107"
+    path: "/idstudios-files-drupal-test"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dev-drupal-files-volume-claim
+  namespace: web
+spec:
+  resources:
+    requests:
+      storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  selector:
+    matchLabels:
+      volume: dev-drupal-files-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-drupal-lb
+  namespace: web
+spec:
+  ports:
+  - port: 8000
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: dev-drupal
+  type: LoadBalancer

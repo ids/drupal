@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: $DRUPAL_STACK_NAME-drupal
+  namespace: $DRUPAL_NAMESPACE
+  labels:
+    app: $DRUPAL_STACK_NAME-drupal
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 100
+  selector:
+    matchLabels:
+      app: $DRUPAL_STACK_NAME-drupal
+  template:
+    metadata:
+      labels:
+        app: $DRUPAL_STACK_NAME-drupal
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: $DRUPAL_STACK_NAME-drupal
+        image: $DRUPAL_IMAGE
+        env:
+        - name: DRUPALDB_HOST
+          value: $DRUPALDB_HOST
+        - name: DRUPALDB_USER
+          value: $DRUPALDB_USER
+        - name: DRUPALDB_PASSWORD
+          value: $DRUPALDB_PASSWORD
+        - name: DRUPALDB_DATABASE
+          value: $DRUPALDB_DATABASE
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 10        
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: $DRUPAL_STACK_NAME-drupal-files-volume
+            mountPath: "/var/www/html/sites/default/files"
+      volumes:
+      - name: $DRUPAL_STACK_NAME-drupal-files-volume
+        persistentVolumeClaim:
+          claimName: $DRUPAL_STACK_NAME-drupal-files-volume-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: $DRUPAL_STACK_NAME-drupal-service
+  namespace: $DRUPAL_NAMESPACE
+spec:
+  ports:
+  - port: 80
+    name: http
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: $DRUPAL_STACK_NAME-drupal
+    
