@@ -21,7 +21,7 @@ variables:
 
   DOCKERHUB_IMAGE: idstudios/drupal
 
-local_image:
+build_images:
   stage: build
   image: docker:latest
   tags:
@@ -33,36 +33,15 @@ local_image:
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_LATEST}
     - docker push ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE_LATEST}
-
-dockerhub_develop_image:
-  image: docker:latest
-  stage: build
-  tags:
-    - docker
-  script:
-    - export IMAGE_VERSION=develop
-    - cd $CI_PROJECT_DIR
+    - export IMAGE_VERSION=latest
+    - (if [ "$CI_COMMIT_REF_NAME" == "develop" ]; then IMAGE_VERSION=develop"; fi);
     - echo "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
-    - docker build -t $DOCKERHUB_IMAGE:$IMAGE_VERSION .
+    - docker tag ${CONTAINER_IMAGE} ${DOCKERHUB_IMAGE}:${IMAGE_VERSION}
     - docker push $DOCKERHUB_IMAGE:$IMAGE_VERSION
   only:
     - develop
 
-dockerhub_master_image:
-  image: docker:latest
-  stage: build
-  tags:
-    - docker
-  script:
-    - export IMAGE_VERSION=latest
-    - cd $CI_PROJECT_DIR
-    - echo "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
-    - docker build -t $DOCKERHUB_IMAGE:$IMAGE_VERSION .
-    - docker push $DOCKERHUB_IMAGE:$IMAGE_VERSION
-  only:
-    - master
-
-deploy_dev:
+deploy_to_dev:
   stage: deploy
   image: lwolf/helm-kubectl-docker:v152_213
   before_script:
