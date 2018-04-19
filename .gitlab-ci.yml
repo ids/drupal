@@ -33,7 +33,7 @@ variables:
 #    - docker push ${CONTAINER_IMAGE_LATEST}
 
 build_dockerhub_develop_image:
-  image: gitlab/dind
+  image: docker:latest
   stage: build
   tags:
     - docker
@@ -47,7 +47,7 @@ build_dockerhub_develop_image:
     - develop
 
 build_dockerhub_master_image:
-  image: gitlab/dind
+  image: docker:latest
   stage: build
   tags:
     - docker
