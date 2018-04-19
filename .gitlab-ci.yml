@@ -21,7 +21,7 @@ variables:
 
   DOCKERHUB_IMAGE: idstudios/drupal
 
-build_gitlab_local_image:
+local_image:
   stage: build
   image: docker:latest
   tags:
@@ -34,7 +34,7 @@ build_gitlab_local_image:
     - docker push ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE_LATEST}
 
-build_dockerhub_develop_image:
+dockerhub_develop_image:
   image: docker:latest
   stage: build
   tags:
@@ -48,7 +48,7 @@ build_dockerhub_develop_image:
   only:
     - develop
 
-build_dockerhub_master_image:
+dockerhub_master_image:
   image: docker:latest
   stage: build
   tags:
@@ -62,7 +62,7 @@ build_dockerhub_master_image:
   only:
     - master
 
-deploy_drupal_to_dev:
+deploy_dev:
   stage: deploy
   image: lwolf/helm-kubectl-docker:v152_213
   before_script:
@@ -78,6 +78,6 @@ deploy_drupal_to_dev:
     - export DRUPALDB_DB=${dev_db}
     - export DRUPALDB_USER=${dev_db_user}
     - export DRUPALDB_PWD=${dev_db_pwd}
-    - bash $CI_PROJECT_DIR/ci-deploy.sh ${CI_BUILD_REF_NAME}_${CI_BUILD_REF}
+    - /bin/sh $CI_PROJECT_DIR/ci-deploy.sh ${CI_BUILD_REF_NAME}_${CI_BUILD_REF}
   only:
   - develop
