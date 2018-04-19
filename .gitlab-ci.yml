@@ -40,7 +40,7 @@ build_dockerhub_develop_image:
   script:
     - export IMAGE_VERSION=develop
     - cd $CI_PROJECT_DIR
-    - cat "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
+    - echo "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
     - docker build -t $DOCKERHUB_IMAGE:$IMAGE_VERSION .
     - docker push $DOCKERHUB_IMAGE:$IMAGE_VERSION
   only:
@@ -54,7 +54,7 @@ build_dockerhub_master_image:
   script:
     - export IMAGE_VERSION=latest
     - cd $CI_PROJECT_DIR
-    - cat "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
+    - echo "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
     - docker build -t $DOCKERHUB_IMAGE:$IMAGE_VERSION .
     - docker push $DOCKERHUB_IMAGE:$IMAGE_VERSION
   only:
