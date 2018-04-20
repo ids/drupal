@@ -14,7 +14,6 @@ RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 
 RUN mkdir /var/www/html/sites/default/files
-COPY version.html /var/www/html/sites/default/files/
 
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
