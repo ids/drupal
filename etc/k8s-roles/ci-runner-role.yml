@@ -14,20 +14,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: ci-runner-role-binding
-  namespace: default
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: ci-runner-role
-subjects:
-- kind: ServiceAccount
-  name: ci-runner
-  namespace: default  
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: ci-runner-role-binding
   namespace: web
 roleRef:
   apiGroup: rbac.authorization.k8s.io
