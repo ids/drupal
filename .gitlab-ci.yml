@@ -57,7 +57,7 @@ deploy_to_dev:
     - kubectl get pods
   script:
     - cd $CI_PROJECT_DIR
-    - export DRUPAL_STACK_NAME=dev
+    - export DRUPAL_STACK_NAME=${dev_stack_name}
     - export DRUPAL_NAMESPACE=web
     - export DRUPAL_IMAGE=${DOCKERHUB_IMAGE}:develop
     - export DRUPALDB_HOST=${dev_db_host}
