@@ -24,6 +24,7 @@ spec:
       containers:
       - name: $DRUPAL_STACK_NAME-drupal
         image: $DRUPAL_IMAGE
+        imagePullPolicy: Always
         env:
         - name: DRUPALDB_HOST
           value: $DRUPALDB_HOST
