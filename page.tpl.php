@@ -238,7 +238,7 @@
 
     <?php if ($page['footer']): ?>
       <div id="footer" class="clearfix">
-        <span style="display: inline-block;padding: 3px;">Sean was Here - Again</span>
+        <span style="display: inline-block;padding: 3px;">Sean was Here - And CD was working!</span>
         <?php print render($page['footer']); ?>
       </div> <!-- /#footer -->
     <?php endif; ?>
