@@ -18,5 +18,7 @@ RUN mkdir /var/www/html/sites/default/files
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
+COPY page.tpl.php /var/www/html/themes/bartik/templates/page.tpl.php
+
 ENTRYPOINT ["/usr/local/bin/start.sh"]
 
