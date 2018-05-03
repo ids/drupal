@@ -43,7 +43,7 @@ build_images:
     - docker push ${CONTAINER_IMAGE_LATEST}
     - echo "${dockerhub_password}" | docker login -u "${dockerhub_username}" --password-stdin 
     - docker tag ${CONTAINER_IMAGE} ${DOCKERHUB_IMAGE}:${IMAGE_VERSION}
-    - echo "Pushing: ${DOCKERHUB_IMAGE}:${IMAGE_VERSION}"
+    - echo "Pushing ${DOCKERHUB_IMAGE}:${IMAGE_VERSION}"
     - docker push $DOCKERHUB_IMAGE:$IMAGE_VERSION
   only:
     - develop
