@@ -30,14 +30,16 @@ build_images:
     - echo ${CI_COMMIT_REF_NAME}
     - |
       if [ "${CI_COMMIT_REF_NAME}" == "develop" ]; then 
-        export IMAGE_VERSION=develop; 
+        export IMAGE_VERSION=develop_${CI_BUILD_REF}; 
       else
         export IMAGE_VERSION=latest;
       fi
     - cd $CI_PROJECT_DIR
     - echo building :${IMAGE_VERSION} version
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - echo "building ${CONTAINER_IMAGE}"
     - docker build -t ${CONTAINER_IMAGE} .
+    - echo "tagging ${CONTAINER_IMAGE} as ${CONTAINER_IMAGE_LATEST}"
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_LATEST}
     - docker push ${CONTAINER_IMAGE}
     - docker push ${CONTAINER_IMAGE_LATEST}
@@ -58,9 +60,15 @@ deploy_to_dev:
     - kubectl get pods
   script:
     - cd $CI_PROJECT_DIR
+    - |
+      if [ "${CI_COMMIT_REF_NAME}" == "develop" ]; then 
+        export IMAGE_VERSION=develop_${CI_BUILD_REF}; 
+      else
+        export IMAGE_VERSION=latest;
+      fi
     - export DRUPAL_STACK_NAME=${dev_stack_name}
     - export DRUPAL_NAMESPACE=web
-    - export DRUPAL_IMAGE=${DOCKERHUB_IMAGE}:develop
+    - export DRUPAL_IMAGE=${DOCKERHUB_IMAGE}:${IMAGE_VERSION}
     - export DRUPALDB_HOST=${dev_db_host}
     - export DRUPALDB_DATABASE=${dev_db}
     - export DRUPALDB_USER=${dev_db_user}
