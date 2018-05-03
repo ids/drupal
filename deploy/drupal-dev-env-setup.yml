@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: dev-drupal-files-volume
+  name: drupal7-drupal-files-volume
   labels:
-    volume: dev-drupal-files-volume
+    volume: drupal7-drupal-files-volume
 spec:
   capacity:
     storage: 10Gi
@@ -16,7 +16,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: dev-drupal-files-volume-claim
+  name: drupal7-drupal-files-volume-claim
   namespace: web
 spec:
   resources:
@@ -26,12 +26,12 @@ spec:
     - ReadWriteMany
   selector:
     matchLabels:
-      volume: dev-drupal-files-volume
+      volume: drupal7-drupal-files-volume
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-drupal-lb
+  name: drupal7-drupal-lb
   namespace: web
 spec:
   ports:
@@ -39,5 +39,5 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: dev-drupal
+    app: drupal7-drupal
   type: LoadBalancer
