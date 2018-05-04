@@ -238,7 +238,7 @@
 
     <?php if ($page['footer']): ?>
       <div id="footer" class="clearfix">
-        <span style="display: inline-block;padding: 3px;">Sean was Here - change!</span>
+        <span style="display: inline-block;padding: 3px;">Sean was Here - Friday May 4!</span>
         <?php print render($page['footer']); ?>
       </div> <!-- /#footer -->
     <?php endif; ?>
